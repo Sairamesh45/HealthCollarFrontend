@@ -906,9 +906,9 @@ const OFFLINE_TIMEOUT = 30000;  // ms
 const STEP_STRIDE_M   = 0.55;   // average dog stride ≈ 55 cm
 
 const COLLARS = [
-  { name:"Collar 1", pet:"Buddy",   avi:"🐶", id:"8ffcb860-141c-11f1-ad13-23db93f4d850" },
-  { name:"Collar 2", pet:"Charlie", avi:"🦮", id:"bc1cde30-1425-11f1-ad13-23db93f4d850" },
-  { name:"Collar 3", pet:"Luna",    avi:"🐕", id:"cf525160-1425-11f1-9033-1744e78c8f53" },
+  { name:"Collar 1", avi:"🟠", id:"8ffcb860-141c-11f1-ad13-23db93f4d850" },
+  { name:"Collar 2", avi:"🔵", id:"bc1cde30-1425-11f1-ad13-23db93f4d850" },
+  { name:"Collar 3", avi:"🟢", id:"cf525160-1425-11f1-9033-1744e78c8f53" },
 ];
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -983,7 +983,7 @@ async function confirmReset() {
     status[active].steps    = 0;
     status[active].temp     = 0;
     render(active);
-    showToast(`Reset ${COLLARS[active].pet}'s collar to zero`, "success");
+    showToast(`Reset ${COLLARS[active].name} to zero`, "success");
   } catch (e) {
     showToast("Reset failed: " + e.message, "error");
   } finally {
@@ -1008,7 +1008,7 @@ async function handleOffline(i) {
   resetDone[i] = true;
   try {
     await pushZero(COLLARS[i].id);
-    showToast(`${COLLARS[i].pet} went offline — values reset`, "warn");
+    showToast(`${COLLARS[i].name} went offline — values reset`, "warn");
     if (i === active) render(i);
   } catch (_) {}
 }
@@ -1061,7 +1061,7 @@ function render(i) {
 
   // Pet hero
   document.getElementById("petAvi").textContent  = c.avi;
-  document.getElementById("petName").textContent = c.pet;
+  document.getElementById("petName").textContent = c.name;
   document.getElementById("collarLbl").textContent = c.name;
 
   const stTag = document.getElementById("statusTag");
@@ -1157,7 +1157,7 @@ async function saveConfig() {
   btn.textContent = "Pushing config…";
   try {
     await setAttrs(COLLARS[active].id, { peak_threshold:pt, peak_window_n:pwn, filter_window_size:fw, emissivity:em });
-    showToast(`Config pushed to ${COLLARS[active].pet}`, "success");
+    showToast(`Config pushed to ${COLLARS[active].name}`, "success");
   } catch (e) {
     showToast(e.message, "error");
   } finally {
@@ -1180,7 +1180,7 @@ function buildPills() {
         + (i === active      ? " active"       : "")
         + (s.online          ? " online-pill"  : "")
         + (!s.online && s.tsMs ? " offline-pill" : "");
-      p.innerHTML = `<span class="pill-emo">${c.avi}</span><span>${c.pet}</span><span class="pill-led"></span>`;
+      p.innerHTML = `<span class="pill-emo">${c.avi}</span><span>${c.name}</span><span class="pill-led"></span>`;
       p.onclick = () => selectCollar(i);
       el.appendChild(p);
     });
@@ -1203,7 +1203,7 @@ function selectCollar(i) {
   document.getElementById("stepsCard").classList.remove("offline-card");
   document.getElementById("tempCard").classList.remove("offline-card");
   document.getElementById("petAvi").textContent  = COLLARS[i].avi;
-  document.getElementById("petName").textContent = COLLARS[i].pet;
+  document.getElementById("petName").textContent = COLLARS[i].name;
   document.getElementById("statusTag").textContent = "";
 
   refreshData();
