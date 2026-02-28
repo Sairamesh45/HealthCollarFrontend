@@ -1,0 +1,16 @@
+{
+  "name": "myperro-collar-dashboard",
+  "version": "1.0.0",
+  "description": "MyPerro pet collar health dashboard — Steps & Temperature via ThingsBoard",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "devDependencies": {
+    "vercel": "^37.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

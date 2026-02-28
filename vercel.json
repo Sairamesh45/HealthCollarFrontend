@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "functions": {
+    "api/tb.js": {
+      "memory": 128,
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
+    { "source": "/api/tb", "destination": "/api/tb" }
+  ]
+}
